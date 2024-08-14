@@ -6,12 +6,7 @@ import random
 name_monsters = ["goblin", "orc", "troll", "dragon", "giant",
                  "skeleton", "zombie", "vampire", "werewolf", "ghost"]
 
-sword = {"sword": 10, "axe": 15, "mace": 20, "dagger": 5, "spear": 10,
-         "bow": 15, "crossbow": 20, "staff": 10, "wand": 5, "shield": 5}
-
 monsters = []
-
-items = []
 
 potion = 2
 
@@ -29,6 +24,42 @@ player = {"name": "name",
 dungeon = False
 florest = False
 cave = False
+
+sword = {"sword": 1.25, "state": False}
+axe = {"axe": 1.5, "state": False}
+mace = {"mace": 1.75, "state": False}
+dagger = {"dagger": 1.25, "state": False}
+spear = {"spear": 1.5, "state": False}
+bow = {"bow": 1.75, "state": False}
+crossbow = {"crossbow": 2, "state": False}
+staff = {"staff": 1.5, "state": False}
+wand = {"wand": 1.25, "state": False}
+shield = {"shield": 1.25, "state": False}
+items = ["sword", "axe", "mace", "dagger", "spear",
+         "bow", "crossbow", "staff", "wand", "shield"]
+
+
+def weapons_off():
+    global sword
+    global axe
+    global mace
+    global dagger
+    global spear
+    global bow
+    global crossbow
+    global staff
+    global wand
+    global shield
+    sword = {"state": False}
+    axe = {"state": False}
+    mace = {"state": False}
+    dagger = {"state": False}
+    spear = {"state": False}
+    bow = {"state": False}
+    crossbow = {"state": False}
+    staff = {"state": False}
+    wand = {"state": False}
+    shield = {"state": False}
 
 
 def drop_gold():
@@ -51,86 +82,144 @@ def potion_use():
 def inventory():
     global items
     global potion
-    print("Inventory:")
+    os.system("clear")
+    draw()
+    print("\t   Inventory")
+    draw()
     print(f"< potion - {potion}")
     print("< gold -", player["gold"])
     for i in range(len(items)):
+        draw()
         print(f"{i + 1}. {items[i]}")
+    draw()
+    print("equip - to equip items")
+    print("unequip - to unequip items")
     print("< back - to go back")
-    input("Press enter to continue")
+    draw()
+    choice = input("> ")
+    for i in range(len(items)):
+        if choice == f"equip {items[i]}":
+            equip(items[i])
+            break
+        elif choice == f"unequip {items[i]}":
+            unequip(items[i])
+            break
+        if choice == "back":
+            draw()
+            print("You went back")
+            draw()
+            input("Press enter to continue")
+            break
+    if choice == "back":
+        pass
+    else:
+        inventory()
 
 
-def equip():
+def unequip(item):
     global items
     global player
-    print("Equip:")
-    for i in range(len(items)):
-        print(f"{i + 1}. {items[i]}")
-    print("< back - to go back")
-    choice = input("Enter your choice: ")
-    if choice == "1":
-        if "sword" in items:
-            player["attack"] = sword["sword"]
-            print("You equipped a sword")
-        else:
-            print("You don't have a sword")
-    elif choice == "2":
-        if "axe" in items:
-            player["attack"] = sword["axe"]
-            print("You equipped an axe")
-        else:
-            print("You don't have an axe")
-    elif choice == "3":
-        if "mace" in items:
-            player["attack"] = sword["mace"]
-            print("You equipped a mace")
-        else:
-            print("You don't have a mace")
-    elif choice == "4":
-        if "dagger" in items:
-            player["attack"] = sword["dagger"]
-            print("You equipped a dagger")
-        else:
-            print("You don't have a dagger")
-    elif choice == "5":
-        if "spear" in items:
-            player["attack"] = sword["spear"]
-            print("You equipped a spear")
-        else:
-            print("You don't have a spear")
-    elif choice == "6":
-        if "bow" in items:
-            player["attack"] = sword["bow"]
-            print("You equipped a bow")
-        else:
-            print("You don't have a bow")
-    elif choice == "7":
-        if "crossbow" in items:
-            player["attack"] = sword["crossbow"]
-            print("You equipped a crossbow")
-        else:
-            print("You don't have a crossbow")
-    elif choice == "8":
-        if "staff" in items:
-            player["attack"] = sword["staff"]
-            print("You equipped a staff")
-        else:
-            print("You don't have a staff")
-    elif choice == "9":
-        if "wand" in items:
-            player["attack"] = sword["wand"]
-            print("You equipped a wand")
-        else:
-            print("You don't have a wand")
-    elif choice == "10":
-        if "shield" in items:
-            player["attack"] = sword["shield"]
-            print("You equipped a shield")
-        else:
-            print("You don't have a shield")
-    elif choice == "<":
-        pass
-    input("Press enter to continue")
+    global sword
+    global axe
+    global mace
+    global dagger
+    global spear
+    global bow
+    global crossbow
+    global staff
+    global wand
+    global shield
+    if item == "sword":
+        player["attack"] /= sword["sword"]
+        sword["state"] = False
+    elif item == "axe":
+        player["attack"] /= axe["axe"]
+        axe["state"] = False
+    elif item == "mace":
+        player["attack"] /= mace["mace"]
+        mace["state"] = False
+    elif item == "dagger":
+        player["attack"] /= dagger["dagger"]
+        dagger["state"] = False
+    elif item == "spear":
+        player["attack"] /= spear["spear"]
+        spear["state"] = False
+    elif item == "bow":
+        player["attack"] /= bow["bow"]
+        bow["state"] = False
+    elif item == "crossbow":
+        player["attack"] /= crossbow["crossbow"]
+        crossbow["state"] = False
+    elif item == "staff":
+        player["attack"] /= staff["staff"]
+        staff["state"] = False
+    elif item == "wand":
+        player["attack"] /= wand["wand"]
+        wand["state"] = False
+    elif item == "shield":
+        player["attack"] /= shield["shield"]
+        shield["state"] = False
+    items.append(item)
+    print(f"{player['name']} unequipped {item}")
+    draw()
+
+
+def equip(item):
+    global items
+    global player
+    global sword
+    global axe
+    global mace
+    global dagger
+    global spear
+    global bow
+    global crossbow
+    global staff
+    global wand
+    global shield
+    if item == "sword":
+        player["attack"] *= sword["sword"]
+        weapons_off()
+        sword["state"] = True
+    elif item == "axe":
+        player["attack"] *= axe["axe"]
+        weapons_off()
+        axe["state"] = True
+    elif item == "mace":
+        player["attack"] *= mace["mace"]
+        weapons_off()
+        mace["state"] = True
+    elif item == "dagger":
+        player["attack"] *= dagger["dagger"]
+        weapons_off()
+        dagger["state"] = True
+    elif item == "spear":
+        player["attack"] *= spear["spear"]
+        weapons_off()
+        spear["state"] = True
+    elif item == "bow":
+        player["attack"] *= bow["bow"]
+        weapons_off()
+        bow["state"] = True
+    elif item == "crossbow":
+        player["attack"] *= crossbow["crossbow"]
+        weapons_off()
+        crossbow["state"] = True
+    elif item == "staff":
+        player["attack"] *= staff["staff"]
+        weapons_off()
+        staff["state"] = True
+    elif item == "wand":
+        player["attack"] *= wand["wand"]
+        weapons_off()
+        wand["state"] = True
+    elif item == "shield":
+        player["attack"] *= shield["shield"]
+        weapons_off()
+        shield["state"] = True
+    items.remove(item)
+    print(f"{player['name']} equipped {item}")
+    draw()
 
 
 def loja():
@@ -527,8 +616,6 @@ def play():
             show_monsters()
         elif text == "inventory":
             inventory()
-        elif text == "equip":
-            equip()
         elif text == "loja":
             loja()
         elif text == "map":
